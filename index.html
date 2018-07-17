@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #wrap{
+            width: 900px;
+            margin: 0 auto;
+        }
+        #content{
+            margin-top: 10px;
+        }
+        #Left{
+            float: left;
+            width: 600px;
+            height: 450px;
+            position: relative;
+        }
+        #leftPic{
+            width: 580px;
+            height: 430px;
+        }
+        #Right{
+            float: right;
+            width: 300px;
+            height: 450px;
+            position: relative;
+        }
+        #rightPic{
+            width: 280px;
+            height: 430px;
+        }
+        #ltxt,#rtxt{
+            position: absolute;
+            bottom: 0px;
+        }
+        #ltxt{
+            left: 240px;
+        }
+        #rtxt{
+            left: 110px;
+        }
+        #lnum,#rnum{
+            position: absolute;
+            bottom: -30px;
+            left: 0px;
+        }
+    </style>
+    <script>
+        function showPageTip(txt,num,index,length,group){
+            if(group == 'left')
+                txt.innerHTML =  '第一组第'+(index+1)+'张';
+            else
+                txt.innerHTML =  '第二组第'+(index+1)+'张';
+            num.innerHTML = (index+1)+'/'+length;
+        }
+        window.onload = function () {
+            var bPre = document.getElementById('pre');
+            var bNext = document.getElementById('next');
+            var leftPic = document.getElementById('leftPic');
+            var ltxt = document.getElementById('ltxt');
+            var lnum = document.getElementById('lnum');
+            var rightPic = document.getElementById('rightPic');
+            var rtxt = document.getElementById('rtxt');
+            var rnum = document.getElementById('rnum');
+            var aSrc1 = ['img/1.jpg','img/2.jpg','img/3.jpg','img/4.jpg','img/5.jpg','img/6.jpg'];
+            var aSrc2 = ['img/7.jpg','img/8.jpg','img/9.jpg','img/10.jpg'];
+            var lindex = 0;
+            var rindex = 0;
+            showPageTip(ltxt,lnum,lindex,aSrc1.length,'left');
+            showPageTip(rtxt,rnum,rindex,aSrc2.length,'right');
+            leftPic.onclick = function () {
+                lindex++;
+                lindex = lindex%aSrc1.length;
+                this.src = aSrc1[lindex];
+                showPageTip(ltxt,lnum,lindex,aSrc1.length,'left');
+            }
+            rightPic.onclick = function () {
+                rindex++;
+                rindex = rindex%aSrc2.length;
+                this.src = aSrc2[rindex];
+                showPageTip(rtxt,rnum,rindex,aSrc2.length,'right');
+            }
+            bPre.onclick = function () {
+                lindex--;
+                rindex--;
+                if(lindex<0) lindex = aSrc1.length -1;
+                if(rindex<0) rindex = aSrc2.length -1;
+                leftPic.src = aSrc1[lindex];
+                rightPic.src = aSrc2[rindex];
+                showPageTip(ltxt,lnum,lindex,aSrc1.length,'left');
+                showPageTip(rtxt,rnum,rindex,aSrc2.length,'right');
+            }
+            bNext.onclick = function () {
+                lindex++;
+                rindex++;
+                lindex = lindex%aSrc1.length;
+                rindex = rindex%aSrc2.length;
+                leftPic.src = aSrc1[lindex];
+                rightPic.src = aSrc2[rindex];
+                showPageTip(ltxt,lnum,lindex,aSrc1.length,'left');
+                showPageTip(rtxt,rnum,rindex,aSrc2.length,'right');
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="wrap">
+    <input id="pre" type="button" value="上一组">
+    <input id="next" type="button" value="下一组">
+    <div id="content">
+        <div id="Left">
+            <img id="leftPic" src="img/1.jpg" alt="">
+            <div id="ltxt">文字加载中</div>
+            <div id="lnum">页数加载中</div>
+        </div>
+        <div id="Right">
+            <img id="rightPic" src="img/7.jpg" alt="">
+            <div id="rtxt">文字加载中</div>
+            <div id="rnum">页数加载中</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
